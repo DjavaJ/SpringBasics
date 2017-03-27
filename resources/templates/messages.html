@@ -3,22 +3,21 @@
 
 <form action="/create-message" method="post">
     <input type="text" maxlength="140" placeholder="Enter your text" name="messageText"/>
-    <div id="content"> {{{content}}} </div>
-    <button type ="send">Send</button>
+    <button type = button >Send</button>
 
-
-
-
-
+<ol>{{#user}}
+    {{#messages}}
+    <li>
+       {{ . }}
+    </li>
+    {{/messages}}
+    {{/user}}
+</ol>
 </form>
+
 
 <p>{{{namehowdy}}}</p>
 
 
 </body>
-
-
-
-
-
 </html>

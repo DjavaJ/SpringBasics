@@ -4,14 +4,11 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
 
     static User user;
-    static HashMap <String, ArrayList> ha = new HashMap<>();
-    static  ArrayList obj;
 
 
     public static void main(String[] args) {
@@ -25,7 +22,7 @@ public class Main {
             if(user == null){
                 return new ModelAndView(m, "index.html");
             } else {
-                m.put("namehowdy", user.name);
+                m.put("user", user);
                 return new ModelAndView(m, "messages.html");
             }
         }), new MustacheTemplateEngine()
@@ -33,7 +30,7 @@ public class Main {
         );
 
         Spark.post("/create-user", ((request, response) -> {
-            String name = String.format("<h1>%s</h1>",request.queryParams("LoginName"));
+            String name = request.queryParams("LoginName");
             user = new User(name);
 
             response.redirect("/");
@@ -42,21 +39,11 @@ public class Main {
         );
 
         Spark.post("/create-message", ((request, response) -> {
-            obj = new ArrayList();
             String message = request.queryParams("messageText");
-            obj.add(message);
-            user.setMessages(obj);
-
-
-
+            user.getMessages().add(message);
 
             response.redirect("/");
-
-            return new ModelAndView(user.getMessages(), "messages.html");
-
-
-
-
+            return "";
 
         })
         );
